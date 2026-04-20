@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>What Dance Style Are You?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #fff8f2;
+      color: #2c2c2c;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5rem;
+      color: #a0735a;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #888;
+    }
+
+    .back-link {
+      align-self: flex-start;
+      margin-bottom: 1.5rem;
+      color: #a0735a;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .quiz-box {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #f0e0d0;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(160, 115, 90, 0.1);
+    }
+
+    .progress-bar-wrap {
+      background: #f0e0d0;
+      border-radius: 99px;
+      height: 8px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      background: #c9a27e;
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    .question-label {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #2c2c2c;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-btn {
+      background: #fff8f2;
+      border: 1.5px solid #e8d5c4;
+      border-radius: 10px;
+      padding: 0.85rem 1.25rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      color: #2c2c2c;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+
+    .option-btn:hover {
+      background: #f5e6d8;
+      border-color: #c9a27e;
+      transform: translateX(4px);
+    }
+
+    .option-btn.selected {
+      background: #c9a27e;
+      border-color: #a0735a;
+      color: #fff;
+    }
+
+    .next-btn {
+      margin-top: 1.5rem;
+      background: #a0735a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 2rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+      display: none;
+    }
+
+    .next-btn:hover {
+      background: #2c2c3e;
+    }
+
+    .result-box {
+      text-align: center;
+      display: none;
+    }
+
+    .result-emoji {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      color: #a0735a;
+      margin-bottom: 0.75rem;
+    }
+
+    .result-desc {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .retake-btn {
+      background: #2c2c3e;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 2rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .retake-btn:hover {
+      background: #a0735a;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="fromscratch.html" class="back-link">← Back to My Dance Page</a>
+
+  <header>
+    <h1>What Dance Style Are You?</h1>
+    <p>Answer 5 questions to find out your inner dancer!</p>
+  </header>
+
+  <div class="quiz-box">
+    <div id="quiz-section">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progress-bar" style="width: 0%"></div>
+      </div>
+      <div class="question-label" id="question-label">Question 1 of 5</div>
+      <div class="question-text" id="question-text"></div>
+      <div class="options" id="options"></div>
+      <button class="next-btn" id="next-btn">Next →</button>
+    </div>
+
+    <div class="result-box" id="result-box">
+      <div class="result-emoji" id="result-emoji"></div>
+      <div class="result-title" id="result-title"></div>
+      <div class="result-desc" id="result-desc"></div>
+      <button class="retake-btn" onclick="restartQuiz()">Retake the Quiz</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        text: "What's your go-to vibe on a Friday night?",
+        options: [
+          { text: "Hitting the dance floor and freestyling", style: "hiphop" },
+          { text: "Watching a movie and feeling all the emotions", style: "contemporary" },
+          { text: "Getting dressed up and going somewhere fancy", style: "ballet" },
+          { text: "Out with friends being loud and fun", style: "jazz" }
+        ]
+      },
+      {
+        text: "Pick a word that describes you best:",
+        options: [
+          { text: "Fierce", style: "hiphop" },
+          { text: "Graceful", style: "ballet" },
+          { text: "Expressive", style: "contemporary" },
+          { text: "Energetic", style: "jazz" }
+        ]
+      },
+      {
+        text: "What kind of music do you vibe with most?",
+        options: [
+          { text: "Hip hop and R&B", style: "hiphop" },
+          { text: "Classical or orchestral", style: "ballet" },
+          { text: "Indie or alternative", style: "contemporary" },
+          { text: "Pop or upbeat anything", style: "jazz" }
+        ]
+      },
+      {
+        text: "How do you handle stress?",
+        options: [
+          { text: "Channel it into energy and power through", style: "hiphop" },
+          { text: "Take a quiet moment and breathe", style: "ballet" },
+          { text: "Journal or process your feelings", style: "contemporary" },
+          { text: "Distract yourself with something fun", style: "jazz" }
+        ]
+      },
+      {
+        text: "What matters most to you in a performance?",
+        options: [
+          { text: "Bringing the hype and energy", style: "hiphop" },
+          { text: "Perfecting every detail", style: "ballet" },
+          { text: "Making people feel something", style: "contemporary" },
+          { text: "Having fun and entertaining the crowd", style: "jazz" }
+        ]
+      }
+    ];
+
+    const results = {
+      hiphop: {
+        emoji: "🔥",
+        title: "Hip Hop",
+        desc: "You are bold, confident, and full of energy. You don't follow the rules — you make your own. Hip hop is your style because you bring passion and power to everything you do. You thrive in the spotlight and love expressing yourself on your own terms."
+      },
+      ballet: {
+        emoji: "🩰",
+        title: "Ballet",
+        desc: "You are disciplined, graceful, and detail-oriented. You believe that true artistry comes from hard work and dedication. Ballet suits you perfectly — you appreciate beauty, precision, and the quiet confidence that comes from mastering something difficult."
+      },
+      contemporary: {
+        emoji: "🌊",
+        title: "Contemporary",
+        desc: "You are deeply emotional, creative, and expressive. You feel things deeply and love using movement to tell a story. Contemporary dance is your match — it's raw, honest, and full of meaning, just like you."
+      },
+      jazz: {
+        emoji: "✨",
+        title: "Jazz",
+        desc: "You are fun, vibrant, and the life of the party. You light up every room you walk into and bring joy to everyone around you. Jazz is your style — upbeat, expressive, and impossible not to smile at."
+      }
+    };
+
+    let current = 0;
+    let scores = { hiphop: 0, ballet: 0, contemporary: 0, jazz: 0 };
+    let selected = null;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById('question-label').textContent = `Question ${current + 1} of ${questions.length}`;
+      document.getElementById('question-text').textContent = q.text;
+      document.getElementById('progress-bar').style.width = `${(current / questions.length) * 100}%`;
+
+      const optionsDiv = document.getElementById('options');
+      optionsDiv.innerHTML = '';
+      selected = null;
+      document.getElementById('next-btn').style.display = 'none';
+
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt.text;
+        btn.onclick = () => selectOption(btn, opt.style, i);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function selectOption(btn, style, index) {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selected = style;
+      document.getElementById('next-btn').style.display = 'block';
+    }
+
+    document.getElementById('next-btn').onclick = () => {
+      if (!selected) return;
+      scores[selected]++;
+      current++;
+      if (current < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    };
+
+    function showResult() {
+      document.getElementById('progress-bar').style.width = '100%';
+      document.getElementById('quiz-section').style.display = 'none';
+      const resultBox = document.getElementById('result-box');
+      resultBox.style.display = 'block';
+
+      const top = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+      const r = results[top];
+      document.getElementById('result-emoji').textContent = r.emoji;
+      document.getElementById('result-title').textContent = r.title;
+      document.getElementById('result-desc').textContent = r.desc;
+    }
+
+    function restartQuiz() {
+      current = 0;
+      scores = { hiphop: 0, ballet: 0, contemporary: 0, jazz: 0 };
+      selected = null;
+      document.getElementById('quiz-section').style.display = 'block';
+      document.getElementById('result-box').style.display = 'none';
+      loadQuestion();
+    }
+
+    loadQuestion();
+  </script>
+
+</body>
+</html>
